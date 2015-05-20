@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h1>履歴</h1>(最近20件のみ)
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p>dns: DNSで名前解決している時間, tcp: TCP socket確立までの時間<br />
+          http(req-&gt;res): HTTPでrequestを出して、responseが終わるまでの時間, http(res): HTTP responseの開始時刻から終了時刻までの時間</p>
+          <p>speed: size/http(res)で計算 </p>
+          <table class="table">
+            <thead>
+              <tr>
+                <td>time</td>
+                <td>REMOTE_ADDR</td>
+                <td>User-Agent</td>
+                <td>URL</td>
+                <td>size(byte)</td>
+                <td>dns(ms)</td>
+                <td>tcp(ms)</td>
+                <td>http<br/>(req-&gt;res, ms)</td>
+                <td>http<br/>(res, ms)</td>
+                <td>speed(KByte/s)</td>
+              </tr>
+            </thead>
+            <tbody>
+              {% for log in logs -%}
+              <tr>
+                <td>{{ log.appended }}</td>
+                <td>{{ log.remote_addr }}</td>
+                <td>{{ log.user_agent }}</td>
+                <td>{{ log.url }}</td>
+                <td>{{ log.size }}</td>
+                <td>{{ "%.2f" | format(log.dns_time) }}</td>
+                <td>{{ "%.2f" | format(log.tcp_time) }}</td>
+                <td>{{ "%.2f" | format(log.http_rt_time) }}</td>
+                <td>{{ "%.2f" | format(log.http_res_time) }}</td>
+                <td>{{ "%.2f" | format((log.size / 1000.0) / (log.http_res_time / 1000)) }}</td>                
+              </tr>
+              {%- endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
