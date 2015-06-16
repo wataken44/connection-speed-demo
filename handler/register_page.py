@@ -21,5 +21,5 @@ class RegisterPage(BasePage):
             http_rt_time = float(self.request.get('http_rt_time')),
             http_res_time = float(self.request.get('http_res_time'))
         )
-        
-        p.put()
+        if p.http_res_time > 0.0:
+            p.put()
