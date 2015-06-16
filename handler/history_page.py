@@ -28,8 +28,10 @@ class HistoryPage(BasePage):
             return '.'.join(arr)
         elif addr.find(':'): #ipv6
             arr = addr.split(":")
-            arr[0] = 'y'
-            arr[1] = 'x'
+            arr[0] = 'xx'
+            arr[1] = 'yy'
+            arr[-2] = 'zz'
+            arr[-1] = 'ww'
             return ':'.join(arr)
         else:
             return 'xxxxxxxx'
