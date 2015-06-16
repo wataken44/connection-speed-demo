@@ -17,20 +17,19 @@
         <div class="col-md-12">
           <p>dns: DNSで名前解決している時間, tcp: TCP socket確立までの時間<br />
           http(req-&gt;res): HTTPでrequestを出して、responseが終わるまでの時間, http(res): HTTP responseの開始時刻から終了時刻までの時間</p>
-          <p>speed: size/http(res)で計算 </p>
+          <p>speed: 31731Byte/http(res)で計算</p>
           <table class="table">
             <thead>
               <tr>
                 <td>time</td>
                 <td>REMOTE_ADDR</td>
                 <td>User-Agent</td>
-                <td>URL</td>
-                <td>size(byte)</td>
                 <td>dns(ms)</td>
                 <td>tcp(ms)</td>
                 <td>http<br/>(req-&gt;res, ms)</td>
                 <td>http<br/>(res, ms)</td>
                 <td>speed(KByte/s)</td>
+                <td>speed(Kbps)</td>
               </tr>
             </thead>
             <tbody>
@@ -39,13 +38,12 @@
                 <td>{{ log.appended }}</td>
                 <td>{{ log.remote_addr }}</td>
                 <td>{{ log.user_agent }}</td>
-                <td>{{ log.url }}</td>
-                <td>{{ log.size }}</td>
-                <td>{{ "%.2f" | format(log.dns_time) }}</td>
-                <td>{{ "%.2f" | format(log.tcp_time) }}</td>
-                <td>{{ "%.2f" | format(log.http_rt_time) }}</td>
-                <td>{{ "%.2f" | format(log.http_res_time) }}</td>
-                <td>{{ "%.2f" | format((log.size / 1000.0) / (log.http_res_time / 1000)) }}</td>                
+                <td>{{ "%.1f" | format(log.dns_time) }}</td>
+                <td>{{ "%.1f" | format(log.tcp_time) }}</td>
+                <td>{{ "%.1f" | format(log.http_rt_time) }}</td>
+                <td>{{ "%.1f" | format(log.http_res_time) }}</td>
+                <td>{{ "%.1f" | format((log.size / 1000.0) / (log.http_res_time / 1000)) }}</td>
+                <td>{{ "%.1f" | format((8 * log.size / 1000.0) / (log.http_res_time / 1000)) }}</td>
               </tr>
               {%- endfor %}
             </tbody>
