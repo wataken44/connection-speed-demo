@@ -7,6 +7,9 @@ version: 1
 handlers:
 - url: /static
   static_dir: static
+- url: /raw.txt
+  script: main.application
+  login: admin
 - url: /task/.*
   script: main.application
   login: admin
